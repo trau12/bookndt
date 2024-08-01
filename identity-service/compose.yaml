@@ -1,0 +1,10 @@
+version: '8.4'
+
+services:
+  mysql:
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_ROOT_PASSWORD=121221'
+      - 'MYSQL_DATABASE=mydatabase'
+    ports:
+      - '1200:3306'
