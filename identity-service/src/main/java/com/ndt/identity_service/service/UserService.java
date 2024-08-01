@@ -35,8 +35,6 @@ import java.util.stream.Collectors;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class UserService {
-    @Autowired
-    private ElasticsearchClient elasticsearchClient;
 
     private final UserRepositoryElasticsearch userRepositoryElasticsearch;
     UserRepository userRepository;
@@ -44,9 +42,7 @@ public class UserService {
     RoleRepository roleRepository;
     PasswordEncoder passwordEncoder;
 
-    public UserService(ElasticsearchClient elasticsearchClient, UserRepositoryElasticsearch userRepositoryElasticsearch, UserRepository userRepository, UserMapper userMapper, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
-        this.elasticsearchClient = elasticsearchClient;
-        this.userRepositoryElasticsearch = userRepositoryElasticsearch;
+    public UserService( UserRepository userRepository, UserMapper userMapper, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.roleRepository = roleRepository;
@@ -159,15 +155,5 @@ public class UserService {
         return userRepositoryElasticsearch.findByLastName(keyword);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    public Iterable<UserDocument> getAllUsers() {
-        log.info("get all user from elasticsearch");
-        return userRepositoryElasticsearch.findAll();
-    }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    public List<UserDocument> findByLastNameFuzzy(String address) {
-        log.info("Fuzzy search address: " + address);
-        return userRepositoryElasticsearch.findByLastNameFuzzy(address);
-    }
 }

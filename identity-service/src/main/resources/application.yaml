@@ -24,15 +24,16 @@ spring:
       auto-index-creation: true
 
   datasource:
-    url: ${DBMS_CONNECTION}
+    url: "jdbc:mysql://127.0.0.1:3307/identity_service"
     driverClassName: "com.mysql.cj.jdbc.Driver"
-    username: ${DBMS_USERNAME}
-    password: ${DBMS_PASSWORD}
+    username: root
+    password: 121221
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
 
 jwt:
+  signerKey: "1TjXchw5FloESb63Kc+DFhTARvpWL4jUGCwfGWxuG5SIf/1y/LgJxHnMqaF6A/ij"
   valid-duration: 3600 # in seconds
   refreshable-duration: 36000 # in seconds

@@ -76,39 +76,7 @@ public class UserController {
         return ApiResponse.<String>builder().result("User has been deleted").build();
     }
 
-    @PostMapping("/sync")
-    public String syncUsers(){
-        return userService.syncUser(userService.getAllUsersUnpageable());
-    }
 
-    /**
-     * Normal search
-     * @param keyword
-     * @return
-     */
-    @GetMapping("/search/lastname/{keyword}")
-    public ApiResponse<List<UserResponse>> finByAddress(@PathVariable String keyword) {
-        return (ApiResponse<List<UserResponse>>) userService.findByLastName(keyword);
-    }
-
-    /**
-     * Get all from Elasticsearch
-     * @return
-     */
-    @GetMapping("/getAllUsers")
-    public Iterable<UserDocument> getAllUsers() {
-        return userService.getAllUsers();
-    }
-
-    /**
-     * Fuzzy search
-     * @param lastName
-     * @return
-     */
-    @GetMapping("/fuzzysearch/lastname/{lastName}")
-    public List<UserDocument> findByAddressFuzzy(@PathVariable String lastName) {
-        return userService.findByLastNameFuzzy(lastName);
-    }
     /**
      * Get Employee by firstName
      * @param firstName
