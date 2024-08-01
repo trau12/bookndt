@@ -3,3 +3,9 @@ server:
   servlet:
     context-path: /profile
 
+spring:
+  neo4j:
+    uri: bolt://localhost:7687
+    authentication:
+      username: neo4j
+      password: 121221TTh40
