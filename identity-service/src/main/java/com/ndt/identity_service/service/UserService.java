@@ -1,24 +1,19 @@
 package com.ndt.identity_service.service;
 
-import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import com.ndt.identity_service.constant.PredefinedRole;
 import com.ndt.identity_service.dto.request.UserCreationRequest;
 import com.ndt.identity_service.dto.request.UserUpdateRequest;
 import com.ndt.identity_service.dto.response.UserResponse;
 import com.ndt.identity_service.entity.Role;
 import com.ndt.identity_service.entity.User;
-import com.ndt.identity_service.entity.UserDocument;
 import com.ndt.identity_service.exception.AppException;
 import com.ndt.identity_service.exception.ErrorCode;
-import com.ndt.identity_service.mapper.Mapper;
 import com.ndt.identity_service.mapper.UserMapper;
 import com.ndt.identity_service.repository.RoleRepository;
 import com.ndt.identity_service.repository.UserRepository;
-import com.ndt.identity_service.repository.UserRepositoryElasticsearch;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -29,14 +24,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class UserService {
 
-    private final UserRepositoryElasticsearch userRepositoryElasticsearch;
     UserRepository userRepository;
     UserMapper userMapper;
     RoleRepository roleRepository;
@@ -47,21 +40,6 @@ public class UserService {
         this.userMapper = userMapper;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
-    }
-
-    public String syncUser(List<User> users) {
-        String message = "Error synchronize data";
-        List<UserDocument> userDocuments = users.stream()
-                .map(Mapper::convertToUserDocument)
-                .collect(Collectors.toList());
-        try {
-            userRepositoryElasticsearch.saveAll(userDocuments);
-            message = "Synchronized data Mysql and Elasticsearch";
-            log.info(message);
-        } catch (Exception e) {
-            log.error(message);
-        }
-        return message;
     }
 
     public UserResponse createUser(UserCreationRequest request) {
@@ -79,7 +57,6 @@ public class UserService {
 
         try {
             user = userRepository.save(user);
-            userRepositoryElasticsearch.save(Mapper.convertToUserDocument(user));
         } catch (DataIntegrityViolationException exception) {
             throw new AppException(ErrorCode.USER_EXISTED);
         }
@@ -142,18 +119,5 @@ public class UserService {
             return List.of(); // Trả về danh sách rỗng nếu có lỗi
         }
     }
-
-    public List<User> getAllUsersUnpageable() {
-        List<User> users = userRepository.findAll();
-        log.info("Get all users unpagenable");
-        return users;
-    }
-
-    @PreAuthorize("hasRole('ADMIN')")
-    public List<UserDocument> findByLastName(String keyword) {
-        log.info("Normal search user by last name: " + keyword);
-        return userRepositoryElasticsearch.findByLastName(keyword);
-    }
-
 
 }

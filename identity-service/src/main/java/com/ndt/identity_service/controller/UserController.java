@@ -4,7 +4,6 @@ import com.ndt.identity_service.dto.request.ApiResponse;
 import com.ndt.identity_service.dto.request.UserCreationRequest;
 import com.ndt.identity_service.dto.request.UserUpdateRequest;
 import com.ndt.identity_service.dto.response.UserResponse;
-import com.ndt.identity_service.entity.UserDocument;
 import com.ndt.identity_service.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
