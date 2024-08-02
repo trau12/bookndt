@@ -1,0 +1,68 @@
+[33mcommit 6f51560f48e83d6d2438db7478a7c71279a53365[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: trau12 <tairazerx@gmail.com>
+Date:   Thu Aug 1 20:22:13 2024 +0700
+
+    test3
+
+[33mcommit 1c4ab993445bf36188214331ea4420f199b177fb[m
+Merge: e11c79f bb7619d
+Author: trau12 <tairazerx@gmail.com>
+Date:   Thu Aug 1 20:15:27 2024 +0700
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit e11c79fe6871d91e3ef7e973410d3bbefc57f9eb[m
+Author: trau12 <tairazerx@gmail.com>
+Date:   Thu Aug 1 20:15:12 2024 +0700
+
+    test2
+
+[33mcommit bb7619d56fd0793a45233b24d7aa73695a07e6f0[m
+Author: trau12 <91337725+trau12@users.noreply.github.com>
+Date:   Thu Aug 1 19:58:11 2024 +0700
+
+    Update README.md
+
+[33mcommit a44e14538c7771897917e054578a9eb04181e028[m
+Author: trau12 <tairazerx@gmail.com>
+Date:   Thu Aug 1 19:57:34 2024 +0700
+
+    Remove identity directory
+
+[33mcommit e2f3e5a4ce0401e2dcc674bc5b2931e3e18f22f5[m
+Merge: c9fc13a 1b0c515
+Author: trau12 <tairazerx@gmail.com>
+Date:   Thu Aug 1 19:53:13 2024 +0700
+
+    Merge commit '1b0c515a61aa52cc997fe4c71c4d9145ec2a0314' as 'identity-service'
+
+[33mcommit 1b0c515a61aa52cc997fe4c71c4d9145ec2a0314[m
+Author: trau12 <tairazerx@gmail.com>
+Date:   Thu Aug 1 19:53:13 2024 +0700
+
+    Squashed 'identity-service/' content from commit b0179fc
+    
+    git-subtree-dir: identity-service
+    git-subtree-split: b0179fc3319eaea6504b1aac5c1314d24978afe3
+
+[33mcommit c9fc13a7a64a22f6adc2e6ddbe3cf69d39f0c9b2[m
+Merge: a68cfea 432361b
+Author: trau12 <tairazerx@gmail.com>
+Date:   Thu Aug 1 19:49:02 2024 +0700
+
+    Merge commit '432361bdf368f09c613a7b613d5e35ce1babbc12' as 'identity'
+
+[33mcommit 432361bdf368f09c613a7b613d5e35ce1babbc12[m
+Author: trau12 <tairazerx@gmail.com>
+Date:   Thu Aug 1 19:49:02 2024 +0700
+
+    Squashed 'identity/' content from commit b0179fc
+    
+    git-subtree-dir: identity
+    git-subtree-split: b0179fc3319eaea6504b1aac5c1314d24978afe3
+
+[33mcommit a68cfeaff93c3c15ce0e54e7550e444b9d9556cb[m
+Author: trau12 <tairazerx@gmail.com>
+Date:   Thu Aug 1 19:46:50 2024 +0700
+
+    test

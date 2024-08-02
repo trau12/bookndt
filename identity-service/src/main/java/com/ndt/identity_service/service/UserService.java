@@ -8,10 +8,13 @@ import com.ndt.identity_service.entity.Role;
 import com.ndt.identity_service.entity.User;
 import com.ndt.identity_service.exception.AppException;
 import com.ndt.identity_service.exception.ErrorCode;
+import com.ndt.identity_service.mapper.ProfileMapper;
 import com.ndt.identity_service.mapper.UserMapper;
 import com.ndt.identity_service.repository.RoleRepository;
 import com.ndt.identity_service.repository.UserRepository;
+import com.ndt.identity_service.repository.httpclient.ProfileClient;
 import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
@@ -26,6 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class UserService {
@@ -34,13 +38,9 @@ public class UserService {
     UserMapper userMapper;
     RoleRepository roleRepository;
     PasswordEncoder passwordEncoder;
+    ProfileClient profileClient;
+    ProfileMapper profileMapper;
 
-    public UserService( UserRepository userRepository, UserMapper userMapper, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     public UserResponse createUser(UserCreationRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
@@ -54,12 +54,12 @@ public class UserService {
         roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
 
         user.setRoles(roles);
+        user = userRepository.save(user);
 
-        try {
-            user = userRepository.save(user);
-        } catch (DataIntegrityViolationException exception) {
-            throw new AppException(ErrorCode.USER_EXISTED);
-        }
+        var profileRequest = profileMapper.toProfileCreationRequest(request);
+        profileRequest.setUserId(user.getId());
+
+        profileClient.createProfile(profileRequest);
 
         return userMapper.toUserResponse(user);
     }
