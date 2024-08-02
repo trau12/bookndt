@@ -1,6 +1,6 @@
 profile-service/src/main/docker/neo4j/data/
 profile-service/src/main/docker/neo4j/transactions/
-*.db
+*.db.0
 # Compiled class file
 *.class
 

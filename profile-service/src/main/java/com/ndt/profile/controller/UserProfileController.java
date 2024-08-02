@@ -1,10 +1,10 @@
 package com.ndt.profile.controller;
 
-import com.ndt.profile.dto.response.UserProfileResponse;
-import com.ndt.profile.service.UserProfileService;
 import org.springframework.web.bind.annotation.*;
 
 import com.ndt.profile.dto.request.ProfileCreationRequest;
+import com.ndt.profile.dto.response.UserProfileResponse;
+import com.ndt.profile.service.UserProfileService;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
