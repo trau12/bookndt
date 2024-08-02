@@ -1,4 +1,6 @@
 profile-service/src/main/docker/neo4j/data/
+profile-service/src/main/docker/neo4j/transactions/
+*.db
 # Compiled class file
 *.class
 
@@ -33,3 +35,5 @@ hs_err_pid*
 .vscode
 *.iml
 replay_pid*
+
+
