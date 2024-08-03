@@ -1,4 +1,4 @@
-package com.devteria.gateway.dto.request;
+package com.ndt.gateway.dto.request;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

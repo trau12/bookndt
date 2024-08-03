@@ -1,6 +1,6 @@
-package com.devteria.gateway.configuration;
+package com.ndt.gateway.configuration;
 
-import com.devteria.gateway.repository.IdentityClient;
+import com.ndt.gateway.repository.IdentityClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;

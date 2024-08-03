@@ -1,8 +1,9 @@
-package com.devteria.profile.controller;
+package com.ndt.profile.controller;
 
-import com.devteria.profile.dto.request.ProfileCreationRequest;
-import com.devteria.profile.dto.response.UserProfileResponse;
-import com.devteria.profile.service.UserProfileService;
+
+import com.ndt.profile.dto.request.ProfileCreationRequest;
+import com.ndt.profile.dto.response.UserProfileResponse;
+import com.ndt.profile.service.UserProfileService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
