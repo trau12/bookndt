@@ -22,7 +22,8 @@ spring:
       repositories:
         enabled: true
       auto-index-creation: true
-
+  application:
+    name: identity-service
   datasource:
     url: "jdbc:mysql://127.0.0.1:3307/identity_service"
     driverClassName: "com.mysql.cj.jdbc.Driver"

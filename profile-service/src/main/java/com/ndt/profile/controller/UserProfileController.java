@@ -1,8 +1,10 @@
 package com.ndt.profile.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.*;
 
-import com.ndt.profile.dto.request.ProfileCreationRequest;
+import com.ndt.profile.dto.ApiResponse;
 import com.ndt.profile.dto.response.UserProfileResponse;
 import com.ndt.profile.service.UserProfileService;
 
@@ -16,13 +18,17 @@ import lombok.experimental.FieldDefaults;
 public class UserProfileController {
     UserProfileService userProfileService;
 
-    @PostMapping("/users")
-    UserProfileResponse createProfile(@RequestBody ProfileCreationRequest request) {
-        return userProfileService.createProfile(request);
+    @GetMapping("/users/{profileId}")
+    ApiResponse<UserProfileResponse> getProfile(@PathVariable String profileId) {
+        return ApiResponse.<UserProfileResponse>builder()
+                .result(userProfileService.getProfile(profileId))
+                .build();
     }
 
-    @GetMapping("/users/{profileId}")
-    UserProfileResponse getProfile(@PathVariable String profileId) {
-        return userProfileService.getProfile(profileId);
+    @GetMapping("/users")
+    ApiResponse<List<UserProfileResponse>> getAllProfiles() {
+        return ApiResponse.<List<UserProfileResponse>>builder()
+                .result(userProfileService.getAllProfiles())
+                .build();
     }
 }

@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDate;
 import java.util.Set;
 
 @Getter
@@ -31,7 +30,7 @@ public class User {
 
     @Column(name = "last_name")
     String lastName;
-    LocalDate dob;
+
 
     @ManyToMany(fetch = FetchType.LAZY) Set<Role> roles;
 }

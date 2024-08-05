@@ -1,6 +1,6 @@
 package com.ndt.identity_service.controller;
 
-import com.ndt.identity_service.dto.request.ApiResponse;
+import com.ndt.identity_service.dto.ApiResponse;
 import com.ndt.identity_service.dto.request.PermissionRequest;
 import com.ndt.identity_service.dto.response.PermissionResponse;
 import com.ndt.identity_service.service.PermissionService;

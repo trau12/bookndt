@@ -1,12 +1,12 @@
 package com.ndt.identity_service.controller;
-
-import com.ndt.identity_service.dto.request.ApiResponse;
+import com.ndt.identity_service.dto.ApiResponse;
 import com.ndt.identity_service.dto.request.UserCreationRequest;
 import com.ndt.identity_service.dto.request.UserUpdateRequest;
 import com.ndt.identity_service.dto.response.UserResponse;
 import com.ndt.identity_service.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,23 +19,18 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class UserController {
     @Autowired
     CacheManager cacheManager;
 
-    final UserService userService;
+    UserService userService;
 
-
-    public UserController(CacheManager cacheManager, UserService userService) {
-        this.cacheManager = cacheManager;
-        this.userService = userService;
-    }
-
-    @PostMapping
-    ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest request){
-        log.info("Controller: create User");
+    @PostMapping("/create-user")
+    ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest request) {
+        log.info("Controller: create user");
         return ApiResponse.<UserResponse>builder()
                 .result(userService.createUser(request))
                 .build();
