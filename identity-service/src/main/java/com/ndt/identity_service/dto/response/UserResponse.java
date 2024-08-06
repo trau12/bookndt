@@ -2,6 +2,7 @@ package com.ndt.identity_service.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Set;
 
@@ -10,10 +11,13 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Slf4j
 public class UserResponse {
+
     String id;
     String username;
     String firstName;
     String lastName;
     Set<RoleResponse> roles;
+    String city;
 }

@@ -1,8 +1,10 @@
 package com.ndt.identity_service.service;
 
 import com.ndt.identity_service.constant.PredefinedRole;
+import com.ndt.identity_service.dto.ApiResponse;
 import com.ndt.identity_service.dto.request.UserCreationRequest;
 import com.ndt.identity_service.dto.request.UserUpdateRequest;
+import com.ndt.identity_service.dto.response.UserProfileResponse;
 import com.ndt.identity_service.dto.response.UserResponse;
 import com.ndt.identity_service.entity.Role;
 import com.ndt.identity_service.entity.User;
@@ -19,11 +21,15 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.HashSet;
 import java.util.List;
@@ -38,9 +44,8 @@ public class UserService {
     UserMapper userMapper;
     RoleRepository roleRepository;
     PasswordEncoder passwordEncoder;
-    ProfileClient profileClient;
     ProfileMapper profileMapper;
-
+    ProfileClient profileClient;
 
     public UserResponse createUser(UserCreationRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_EXISTED);
@@ -57,7 +62,8 @@ public class UserService {
         var profileRequest = profileMapper.toProfileCreationRequest(request);
         profileRequest.setUserId(user.getId());
 
-        profileClient.createProfile(profileRequest);
+        profileClient.createProfile( profileRequest);
+        //do cái này mà nó không hiện ra
 
         return userMapper.toUserResponse(user);
     }
