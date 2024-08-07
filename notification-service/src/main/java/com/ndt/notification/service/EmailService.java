@@ -2,6 +2,7 @@ package com.ndt.notification.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ndt.notification.dto.request.EmailRequest;
@@ -16,6 +17,7 @@ import feign.FeignException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +25,9 @@ import lombok.experimental.FieldDefaults;
 public class EmailService {
     EmailClient emailClient;
 
-    String apiKey = "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";
+    @Value("${notification.email.brevo-apikey}")
+    @NonFinal
+    String apiKey;
 
     public EmailResponse sendEmail(SendEmailRequest request) {
         EmailRequest emailRequest = EmailRequest.builder()

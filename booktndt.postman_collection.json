@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "94733646-d947-4bc9-928e-486e8093d3e5",
-		"name": "bookteria",
+		"name": "bookndt",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "16988973"
 	},
@@ -129,7 +129,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8888/api/v1/identity/users/registration",
+							"raw": "http://localhost:8888/api/v1/identity/users/create-user",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -140,7 +140,7 @@
 								"v1",
 								"identity",
 								"users",
-								"registration"
+								"create-user"
 							]
 						}
 					},
@@ -203,12 +203,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/identity/users/f60c94bf-2caa-4cf0-92d6-fd1cf0e8940e",
+							"raw": "http://localhost:8081/identity/users/f60c94bf-2caa-4cf0-92d6-fd1cf0e8940e",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8081",
 							"path": [
 								"identity",
 								"users",
@@ -234,12 +234,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/identity/users/d6543cca-14a1-4805-847a-500de211e99b",
+							"raw": "http://localhost:8081/identity/users/d6543cca-14a1-4805-847a-500de211e99b",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8081",
 							"path": [
 								"identity",
 								"users",
@@ -265,12 +265,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/identity/users/18bcec35-7021-4b3d-922d-e977f285ac2d",
+							"raw": "http://localhost:8081/identity/users/18bcec35-7021-4b3d-922d-e977f285ac2d",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8081",
 							"path": [
 								"identity",
 								"users",
@@ -296,12 +296,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/identity/users/myInfo",
+							"raw": "http://localhost:8081/identity/users/myInfo",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8081",
 							"path": [
 								"identity",
 								"users",
@@ -353,12 +353,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/identity/users",
+							"raw": "http://localhost:8081/identity/users",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8081",
 							"path": [
 								"identity",
 								"users"
@@ -446,12 +446,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/identity/auth/token",
+							"raw": "http://localhost:8081/identity/auth/token",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8081",
 							"path": [
 								"identity",
 								"auth",
@@ -479,12 +479,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/identity/auth/refresh",
+							"raw": "http://localhost:8081/identity/auth/refresh",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8081",
 							"path": [
 								"identity",
 								"auth",
@@ -547,12 +547,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/identity/auth/logout",
+							"raw": "http://localhost:8081/identity/auth/logout",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8081",
 							"path": [
 								"identity",
 								"auth",
@@ -587,12 +587,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/identity/permissions",
+							"raw": "http://localhost:8081/identity/permissions",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8081",
 							"path": [
 								"identity",
 								"permissions"
@@ -617,12 +617,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/identity/permissions",
+							"raw": "http://localhost:8081/identity/permissions",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8081",
 							"path": [
 								"identity",
 								"permissions"
@@ -647,12 +647,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/identity/permissions/CREATE_DATA",
+							"raw": "http://localhost:8081/identity/permissions/CREATE_DATA",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8081",
 							"path": [
 								"identity",
 								"permissions",
@@ -687,12 +687,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/identity/roles",
+							"raw": "http://localhost:8081/identity/roles",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8081",
 							"path": [
 								"identity",
 								"roles"
@@ -717,12 +717,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/identity/roles",
+							"raw": "http://localhost:8081/identity/roles",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8081",
 							"path": [
 								"identity",
 								"roles"
@@ -756,12 +756,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/identity/roles/ADMIN",
+							"raw": "http://localhost:8081/identity/roles/ADMIN",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "8081",
 							"path": [
 								"identity",
 								"roles",
@@ -858,12 +858,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8082/notification/email/send",
+							"raw": "http://localhost:8083/notification/email/send",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8082",
+							"port": "8083",
 							"path": [
 								"notification",
 								"email",
