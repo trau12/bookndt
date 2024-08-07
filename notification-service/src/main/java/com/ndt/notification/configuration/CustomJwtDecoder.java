@@ -1,4 +1,4 @@
-package com.ndt.profile.configuration;
+package com.ndt.notification.configuration;
 
 import java.text.ParseException;
 

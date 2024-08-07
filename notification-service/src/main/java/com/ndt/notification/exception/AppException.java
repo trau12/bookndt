@@ -1,4 +1,4 @@
-package com.ndt.profile.exception;
+package com.ndt.notification.exception;
 
 public class AppException extends RuntimeException {
 
