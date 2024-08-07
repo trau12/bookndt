@@ -55,7 +55,7 @@ export default function Home() {
                 mb: "40px",
               }}
             >
-              Welcome back to Devteria, {userDetails.username} !
+              Welcome back to Tai, {userDetails.username} !
             </Typography>
             <Box
               sx={{
