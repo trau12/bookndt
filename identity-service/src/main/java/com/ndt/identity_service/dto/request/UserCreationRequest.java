@@ -28,7 +28,7 @@ public class UserCreationRequest {
     String firstName;
     String lastName;
 
-    @DobConstraint(min = 12, message = "INVALID_DOB")
+    @DobConstraint(min = 10, message = "INVALID_DOB")
     LocalDate dob;
 
     String city;

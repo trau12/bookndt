@@ -23,6 +23,8 @@ public class UserProfile {
     @GeneratedValue(generatorClass = UUIDStringGenerator.class)
     String id;
 
+    String username;
+
     @Property("userId")
     String userId;
 
