@@ -1,9 +1,11 @@
 package com.ndt.identity_service.controller;
+
 import com.ndt.identity_service.dto.ApiResponse;
 import com.ndt.identity_service.dto.request.UserCreationRequest;
 import com.ndt.identity_service.dto.request.UserUpdateRequest;
 import com.ndt.identity_service.dto.response.UserResponse;
 import com.ndt.identity_service.service.UserService;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +31,9 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/create-user")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Created"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request")})
     ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest request) {
         log.info("Controller: create user");
         return ApiResponse.<UserResponse>builder()
