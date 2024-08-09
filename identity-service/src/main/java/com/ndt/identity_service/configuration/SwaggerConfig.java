@@ -1,38 +1,34 @@
 package com.ndt.identity_service.configuration;
 
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.info.License;
-import io.swagger.v3.oas.models.servers.Server;
-import org.springdoc.core.models.GroupedOpenApi;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.List;
+@OpenAPIDefinition(
+        info = @Info(
+                title = "Rest data management API",
+                version = "1.0.0"
+        ),
+        servers = {
+                @Server(url = "http://localhost:8081/identity", description = "Identity Server")
+        },
+        security = @SecurityRequirement(name = "BearerAuth")
+)
 
+@SecurityScheme(
+        name = "BearerAuth",
+        type = SecuritySchemeType.HTTP,
+        scheme = "bearer",
+        bearerFormat = "JWT",
+        in = SecuritySchemeIn.HEADER,
+        description = "Enter token"
+
+)
 @Configuration
 public class SwaggerConfig {
-
-    @Bean
-    public GroupedOpenApi publicApi(@Value("identity-service") String apiDocs) {
-        return GroupedOpenApi.builder()
-                .group(apiDocs) // /v3/api-docs/api-service
-                .packagesToScan("com.ndt.identity_service.controller")
-                .build();
-    }
-
-    @Bean
-    public OpenAPI openAPI(
-            @Value("Rest data management API") String title,
-            @Value("1.0.0") String version,
-            @Value("http://localhost:8081") String serverUrl,
-            @Value("Test") String serverName) {
-        return new OpenAPI()
-                .servers(List.of(new Server().url(serverUrl).description(serverName)))
-                .info(new Info().title(title)
-                        .description("API documents")
-                        .version(version)
-                        .license(new License().name("Apache 2.0").url("https://springdoc.org")));
-    }
 }

@@ -5,6 +5,7 @@ import com.ndt.identity_service.dto.request.UserCreationRequest;
 import com.ndt.identity_service.dto.request.UserUpdateRequest;
 import com.ndt.identity_service.dto.response.UserResponse;
 import com.ndt.identity_service.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -34,6 +35,7 @@ public class UserController {
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Created"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request")})
+    @Operation(method = "POST", summary = "Add new user", description = "Send a request via this API to create new user")
     ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest request) {
         log.info("Controller: create user");
         return ApiResponse.<UserResponse>builder()
