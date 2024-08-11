@@ -28,3 +28,29 @@ spring:
             - Path=${app.api-prefix}/notification/**
           filters:
             - StripPrefix=2
+        - id: openai
+          uri: http://localhost:${server.port}
+          predicates:
+            - Path=/v3/api-docs/**,/swagger-ui/**
+          filters:
+            - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+    enabled: true
+  swagger-ui:
+    urls:
+      - url: /v3/api-docs
+        name: API Gateway
+      - url: /identity/v3/api-docs
+        name: Identity Service
+      - url: /profile/v3/api-docs
+        name: Profile Service
+      - url: /notification/v3/api-docs
+        name: Notification Service
+    enabled: true
+    path: /swagger-ui
+  show-actuator: true
+  packages-to-scan: com.ndt.gateway

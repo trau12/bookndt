@@ -44,6 +44,7 @@ public class UserController {
     }
 
     @GetMapping
+    @Operation(summary = "Get list of users", description = "Send a request via this API to get a list of all users")
     ApiResponse<List<UserResponse>> getUsers(){
         return ApiResponse.<List<UserResponse>>builder()
                 .result(userService.getUsers())
@@ -51,6 +52,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
+    @Operation(summary = "Get user detail", description = "Send a request via this API to get user information")
     ApiResponse<UserResponse> getUser(@PathVariable("userId") String userId) {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.getUser(userId))
@@ -58,6 +60,7 @@ public class UserController {
     }
 
     @GetMapping("/my-info")
+    @Operation(summary = "Get user information", description = "Send a request via this API to get user information")
     ApiResponse<UserResponse> getMyInfo() {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.getMyInfo())
@@ -65,6 +68,7 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
+    @Operation(summary = "Update user", description = "Send a request via this API to update user")
     ApiResponse<UserResponse> updateUser(@PathVariable String userId, @RequestBody UserUpdateRequest request) {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.updateUser(userId, request))
@@ -72,6 +76,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
+    @Operation(summary = "Delete user permanently", description = "Send a request via this API to delete user permanently")
     ApiResponse<String> deleteUser(@PathVariable String userId) {
         userService.deleteUser(userId);
         return ApiResponse.<String>builder().result("User has been deleted").build();
@@ -84,6 +89,7 @@ public class UserController {
      * @return
      */
     @GetMapping("/firstName/{firstName}/nocache")
+    @Operation(summary = "Search users with cache", description = "Search users by first name using cache")
     public ApiResponse<List<UserResponse>> getUserByFirstNameWithoutCache(@PathVariable String firstName) {
         List<UserResponse> users = userService.getUserByFirstName(firstName);
         return ApiResponse.<List<UserResponse>>builder()
@@ -92,6 +98,7 @@ public class UserController {
     }
     @Cacheable(value = "user", key = "#firstName")
     @GetMapping("/firstName/{firstName}")
+    @Operation(summary = "Search users with no cache", description = "Search users by first name without using cache")
     public ApiResponse<List<UserResponse>> getUserByFirstName(@PathVariable String firstName) { //check user/ userResponse
         if (!cacheHit(firstName)) {
             log.warn("Cache miss for Employee with firstName: " + firstName);
