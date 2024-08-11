@@ -10,12 +10,14 @@ import com.ndt.identity_service.dto.request.UserUpdateRequest;
 import com.ndt.identity_service.dto.response.UserResponse;
 import com.ndt.identity_service.entity.Role;
 import com.ndt.identity_service.entity.User;
+import com.ndt.identity_service.entity.UserDocument;
 import com.ndt.identity_service.exception.AppException;
 import com.ndt.identity_service.exception.ErrorCode;
 import com.ndt.identity_service.mapper.ProfileMapper;
 import com.ndt.identity_service.mapper.UserMapper;
 import com.ndt.identity_service.repository.RoleRepository;
 import com.ndt.identity_service.repository.UserRepository;
+import com.ndt.identity_service.repository.UserRepositoryElasticSearch;
 import com.ndt.identity_service.repository.httpclient.ProfileClient;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
@@ -37,6 +39,8 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -54,6 +58,7 @@ public class UserService {
     RedisTemplate<String, String> redisTemplate;
     CacheManager cacheManager;
     ObjectMapper objectMapper;
+    UserRepositoryElasticSearch userRepositoryElasticSearch;
 
     private static final String PASSWORD_CHANGE_QUEUE = "password-change-queue";
     private static final String PASSWORD_CHANGE_LOCK_PREFIX = "password-change-lock:";
@@ -231,6 +236,25 @@ public class UserService {
             log.error(e.getMessage());
             return List.of(); // Trả về danh sách rỗng nếu có lỗi
         }
+    }
+
+
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<UserResponse> getAllUsersEs(String lastName) {
+        log.info("Get all users from Elasticsearch");
+        List<UserDocument> users = userRepositoryElasticSearch.findByLastName(lastName);
+        return users.stream()
+                .map(userMapper::toUserResponse)
+                .toList();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<UserResponse> findByLastNameFuzzy(String lastName) {
+        log.info("Fuzzy search lastName: " + lastName);
+        List<UserDocument> users = userRepositoryElasticSearch.findByLastNameFuzzy(lastName);
+        return users.stream()
+                .map(userMapper::toUserResponse)
+                .toList();
     }
 
 }

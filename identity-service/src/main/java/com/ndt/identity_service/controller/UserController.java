@@ -122,4 +122,20 @@ public class UserController {
         return false;
     }
 
+    @GetMapping("/search")
+    @Operation(summary = "Search users by last name", description = "Search users by last name using Elasticsearch")
+    public ApiResponse<List<UserResponse>> searchUsersByLastName(@RequestParam String lastName) {
+        return ApiResponse.<List<UserResponse>>builder()
+                .result(userService.getAllUsersEs(lastName))
+                .build();
+    }
+
+    @GetMapping("/search/fuzzy/{lastName}")
+    @Operation(summary = "Fuzzy search users by last name", description = "Fuzzy search users by last name using Elasticsearch")
+    public ApiResponse<List<UserResponse>> fuzzySearchUsersByLastName(@PathVariable String lastName) {
+        return ApiResponse.<List<UserResponse>>builder()
+                .result(userService.findByLastNameFuzzy(lastName))
+                .build();
+    }
+
 }
