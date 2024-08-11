@@ -38,4 +38,6 @@ public class User {
     boolean emailVerified;
 
     @ManyToMany(fetch = FetchType.LAZY) Set<Role> roles;
+
+    String city;
 }

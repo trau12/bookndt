@@ -13,7 +13,6 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Slf4j
 public class UserResponse {
-
     String id;
     String username;
     String firstName;
@@ -21,5 +20,4 @@ public class UserResponse {
     String email;
     boolean emailVerified;
     Set<RoleResponse> roles;
-//    String username;
 }

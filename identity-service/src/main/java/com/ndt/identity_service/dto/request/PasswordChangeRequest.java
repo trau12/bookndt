@@ -1,0 +1,15 @@
+package com.ndt.identity_service.dto.request;
+
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class PasswordChangeRequest {
+    private String userId;
+    private String currentPassword;
+    private String newPassword;
+}
