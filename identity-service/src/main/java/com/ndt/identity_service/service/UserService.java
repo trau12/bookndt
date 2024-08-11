@@ -79,6 +79,12 @@ public class UserService {
             throw new AppException(ErrorCode.USER_EXISTED);
         }
 
+        // Map User entity to UserDocument for Elasticsearch
+        UserDocument userDocument = userMapper.toUserDocument(user);
+
+        // Save the user document into Elasticsearch
+        userRepositoryElasticSearch.save(userDocument);
+
         var profileRequest = profileMapper.toProfileCreationRequest(request);
         profileRequest.setUserId(user.getId());
 

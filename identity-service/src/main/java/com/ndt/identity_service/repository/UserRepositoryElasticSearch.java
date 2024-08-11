@@ -10,7 +10,7 @@ public interface UserRepositoryElasticSearch extends ElasticsearchRepository<Use
     @Query("{\"bool\": {\"must\": {\"match\": {\"lastName\": \"?0\"}}}}")
     List<UserDocument> findByLastName(String lastName);
 
-    @Query("{\"fuzzy\": {\"lastName\": {\"value\": \"?0\", \"fuzziness\": \"auto\"}}}")
+    @Query("{\"match\": {\"lastName\": \"?0\"}}")
     List<UserDocument> findByLastNameFuzzy(String lastName);
 
 }

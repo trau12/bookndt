@@ -18,6 +18,7 @@ public interface UserMapper {
 
     UserResponse toUserResponse(UserDocument userDocument);
 
+    @Mapping(target = "roles", ignore = true)
     UserDocument toUserDocument(User user);
 
     @Mapping(target = "roles", ignore = true)
