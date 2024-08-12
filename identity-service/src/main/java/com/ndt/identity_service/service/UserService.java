@@ -1,7 +1,5 @@
 package com.ndt.identity_service.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ndt.event.dto.NotificationEvent;
 import com.ndt.identity_service.constant.PredefinedRole;
 import com.ndt.identity_service.dto.request.UserCreationRequest;
@@ -23,18 +21,14 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.CacheManager;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.util.HashSet;
 import java.util.List;
 
@@ -51,13 +45,8 @@ public class UserService {
     ProfileMapper profileMapper;
     ProfileClient profileClient;
     KafkaTemplate<String, Object> kafkaTemplate;
-    RedisTemplate<String, String> redisTemplate;
-    CacheManager cacheManager;
-    ObjectMapper objectMapper;
     UserRepositoryElasticSearch userRepositoryElasticSearch;
 
-    private static final String PASSWORD_CHANGE_QUEUE = "password-change-queue";
-    private static final String PASSWORD_CHANGE_LOCK_PREFIX = "password-change-lock:";
 
     public UserResponse createUser(UserCreationRequest request) {
         User user = userMapper.toUser(request);

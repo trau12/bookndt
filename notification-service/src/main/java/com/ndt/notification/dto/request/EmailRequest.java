@@ -15,6 +15,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class EmailRequest {
+    //thông tin toàn bộ người gửi, người nhận, tiêu đề, nội dung
     Sender sender;
     List<Recipient> to;
     String subject;

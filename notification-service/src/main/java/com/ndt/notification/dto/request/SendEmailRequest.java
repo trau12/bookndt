@@ -13,6 +13,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SendEmailRequest {
+    //yêu câfu gửi
     Recipient to;
     String subject;
     String htmlContent;

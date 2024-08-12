@@ -16,3 +16,4 @@ public class Recipient {
     String name;
     String email;
 }
+
