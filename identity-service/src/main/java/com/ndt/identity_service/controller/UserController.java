@@ -67,7 +67,7 @@ public class UserController {
                 .build();
     }
 
-    @PutMapping("/{userId}")
+    @PutMapping("/update-user/{userId}")
     @Operation(summary = "Update user", description = "Send a request via this API to update user")
     ApiResponse<UserResponse> updateUser(@PathVariable String userId, @RequestBody UserUpdateRequest request) {
         return ApiResponse.<UserResponse>builder()

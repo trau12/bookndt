@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ndt.event.dto.NotificationEvent;
 import com.ndt.identity_service.constant.PredefinedRole;
-import com.ndt.identity_service.dto.request.PasswordChangeRequest;
 import com.ndt.identity_service.dto.request.UserCreationRequest;
 import com.ndt.identity_service.dto.request.UserUpdateRequest;
 import com.ndt.identity_service.dto.response.UserResponse;
@@ -25,7 +24,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -39,8 +37,6 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -120,97 +116,17 @@ public class UserService {
     @PostAuthorize("hasRole('ADMIN') or returnObject.username == authentication.name")
     @Transactional
     public UserResponse updateUser(String userId, UserUpdateRequest request) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
-        // If password change is requested
-        if (request.getCurrentPassword() != null && request.getNewPassword() != null) {
-            // Verify current password and queue the password change
-            if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
-                throw new RuntimeException("Current password is incorrect");
-            }
-            queuePasswordChange(userId, request.getCurrentPassword(), request.getNewPassword());
-        }
-
-        // Update other fields using UserMapper
         userMapper.updateUser(user, request);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        // Update roles
-        if (request.getRoles() != null && !request.getRoles().isEmpty()) {
-            var roles = roleRepository.findAllById(request.getRoles());
-            user.setRoles(new HashSet<>(roles));
-        }
+        var roles = roleRepository.findAllById(request.getRoles());
+        user.setRoles(new HashSet<>(roles));
 
-        User savedUser = userRepository.save(user);
-
-        // Invalidate user cache
-        cacheManager.getCache("users").evict(userId);
-
-        return userMapper.toUserResponse(savedUser);
+        return userMapper.toUserResponse(userRepository.save(user));
     }
 
-    private void queuePasswordChange(String userId, String currentPassword, String newPassword) {
-        String lockKey = PASSWORD_CHANGE_LOCK_PREFIX + userId;
-        log.info("Attempting to set lock for user: {}", userId);
-
-        // Attempt to set a lock for this user
-        Boolean lockAcquired = redisTemplate.opsForValue().setIfAbsent(lockKey, "locked", Duration.ofMinutes(5));
-
-        if (Boolean.TRUE.equals(lockAcquired)) {
-            try {
-                PasswordChangeRequest passwordChangeRequest = new PasswordChangeRequest(userId, currentPassword, newPassword);
-                String jsonRequest = objectMapper.writeValueAsString(passwordChangeRequest);
-                redisTemplate.opsForList().rightPush(PASSWORD_CHANGE_QUEUE, jsonRequest);
-                log.info("Password change request queued for user: {}", userId);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException("Error queuing password change request", e);
-            }
-        } else {
-            log.warn("A password change is already in progress for user: {}", userId);
-            throw new RuntimeException("A password change is already in progress for this user.");
-        }
-    }
-
-    @Scheduled(fixedRate = 1000) // Run every second
-    public void processPasswordChangeQueue() {
-        String jsonRequest = redisTemplate.opsForList().leftPop(PASSWORD_CHANGE_QUEUE);
-        if (jsonRequest != null) {
-            PasswordChangeRequest request = null;
-            try {
-                request = objectMapper.readValue(jsonRequest, PasswordChangeRequest.class);
-                log.info("Processing password change request for user: {}", request.getUserId());
-                changePassword(request);
-            } catch (JsonProcessingException e) {
-                log.error("Error processing password change request", e);
-            } finally {
-                // Release the lock after processing
-                if (request != null) {
-                    redisTemplate.delete(PASSWORD_CHANGE_LOCK_PREFIX + request.getUserId());
-                    log.info("Released lock for user: {}", request.getUserId());
-                }
-            }
-        }
-    }
-
-    private void changePassword(PasswordChangeRequest request) {
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        // Verify current password
-        if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
-            log.error("Current password is incorrect for user: {}", request.getUserId());
-            throw new RuntimeException("Current password is incorrect");
-        }
-
-        // Encode and set new password
-        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
-        userRepository.save(user);
-
-        // Invalidate user cache
-        cacheManager.getCache("users").evict(request.getUserId());
-
-        log.info("Password changed successfully for user: {}", request.getUserId());
-    }
 
     @PostAuthorize("hasRole('ADMIN') or returnObject.username == authentication.name")
     public void deleteUser(String userId){

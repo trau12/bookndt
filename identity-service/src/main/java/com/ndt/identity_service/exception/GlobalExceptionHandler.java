@@ -24,6 +24,9 @@ public class GlobalExceptionHandler {
 
         apiResponse.setCode(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode());
         apiResponse.setMessage(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage());
+
+        // Log thông tin chi tiết của ngoại lệ
+        log.error("An error occurred: ", exception);
         return ResponseEntity.badRequest().body(apiResponse);
     }
 

@@ -13,8 +13,7 @@ import java.util.List;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserUpdateRequest {
-    private String currentPassword;
-    private String newPassword;
+    String password;
     private String firstName;
     private String lastName;
 
